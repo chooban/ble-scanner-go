@@ -22,11 +22,15 @@ func main() {
 	scanner := NewBtScanner(ctx, du)
 	ch := scanner.RunAtcScanner()
 
+	mqttClient := NewMQTTClient()
+	go mqttClient.Run()
+
 	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 	s.Start()
 	for msg := range ch {
 		s.Stop()
 		fmt.Printf("Received messaged: %+v\n", msg)
+		mqttClient.Publish(&msg)
 		s.Start()
 	}
 	s.Stop()

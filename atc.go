@@ -21,6 +21,10 @@ type TemperatureData struct {
 	Counter     int64
 }
 
+func (t *TemperatureData) LineProtocol() string {
+	return fmt.Sprintf("%s,id=%s temp=%f,hum=%d,batt=%d", "temperature", t.DeviceName, t.Temperature, t.Humidity, t.Battery)
+}
+
 const ATC_UUID = "181a"
 
 func ParseATCMessage(deviceName, msg string) TemperatureData {
