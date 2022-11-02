@@ -13,9 +13,7 @@ type MQTTClient struct {
 }
 
 func NewMQTTClient(config *MQTTClientConfig) *MQTTClient {
-	if config.Broker == "" {
-		panic("No MQTT broker defined")
-	}
+	validateConfig(config)
 	opts := mqtt.NewClientOptions().AddBroker(config.Broker).SetClientID(config.ClientId)
 
 	client := mqtt.NewClient(opts)
@@ -23,10 +21,11 @@ func NewMQTTClient(config *MQTTClientConfig) *MQTTClient {
 	return &MQTTClient{
 		client:   client,
 		config:   config,
-		transmit: make(chan *TemperatureData),
+		transmit: make(chan *TemperatureData, 10),
 	}
 }
 
+// Publish method puts a message onto the queue for transmission to MQTT
 func (c *MQTTClient) Publish(t *TemperatureData) {
 	c.transmit <- t
 }
@@ -48,4 +47,15 @@ func (c *MQTTClient) Run() {
 // toLineProtocol function converts TemperatureData struct to MQTT Line Protocol message
 func toLineProtocol(t *TemperatureData) string {
 	return fmt.Sprintf("%s,id=%s temp=%f,hum=%d,batt=%d", "temperature", t.DeviceName, t.Temperature, t.Humidity, t.Battery)
+}
+
+// validateConfig function checks for the presence of the required fields.
+// No return value, it will `panic` if the config is invalid.
+func validateConfig(config *MQTTClientConfig) {
+	if config.Broker == "" {
+		panic("No MQTT broker defined")
+	}
+	if config.Channel == "" {
+		panic("No MQTT channel defined")
+	}
 }

@@ -1,0 +1,8 @@
+Package: ble-scanner-go 
+Version: 1.0 
+Section: base 
+Priority: optional 
+Architecture: armhf 
+Depends:  
+Maintainer: rhendry@gmail.com 
+Description: Scan for BLE advertisements from temperature sensors.
