@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"time"
 
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
@@ -16,12 +15,10 @@ type MQTTClientConfig struct {
 }
 
 type Configurations struct {
-	Mqtt     MQTTClientConfig `mapstructure:"mqtt"`
-	duration *time.Duration
+	Mqtt MQTTClientConfig `mapstructure:"mqtt"`
 }
 
 func ReadConfiguration() (c Configurations) {
-	flag.Duration("du", 5*time.Second, "scanning duration")
 	flag.String("c", "./config.yml", "config file")
 
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
@@ -45,9 +42,6 @@ func ReadConfiguration() (c Configurations) {
 	if err != nil {
 		fmt.Printf("Unable to decode into struct, %v\n", err)
 	}
-
-	duration := viper.GetDuration("du")
-	c.duration = &duration
 
 	return c
 }

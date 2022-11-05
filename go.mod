@@ -3,7 +3,6 @@ module ble-scanner-go
 go 1.19
 
 require (
-	github.com/briandowns/spinner v1.19.0
 	github.com/eclipse/paho.mqtt.golang v1.4.2
 	github.com/go-ble/ble v0.0.0-20220920230323-9a45bebfde4f
 	github.com/pkg/errors v0.9.1
@@ -12,7 +11,6 @@ require (
 )
 
 require (
-	github.com/fatih/color v1.13.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect

@@ -1,6 +1,6 @@
 [Unit]
 Description=BLE Scanner Service
 [Service]
-ExecStart=/usr/local/sbin/ble-scanner-go --du 240h --c /etc/ble-scanner/config.yml
+ExecStart=/usr/local/sbin/ble-scanner-go --c /etc/ble-scanner/config.yml
 [Install]
 WantedBy=multi-user.target
